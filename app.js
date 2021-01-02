@@ -7,17 +7,17 @@ if(process.argv.length === 2)
 else
    { 
     
-    requestgeoLocation(process.argv[2],(error,response)=>{
+    requestgeoLocation(process.argv[2],(error,{latitude,longitude,location}={})=>{
         if(error)
             console.log(error)
         else
         { 
-            requestWeather(response.latitude, response.longitude,(error,data)=>{
+            requestWeather(latitude, longitude,(error,data)=>{
                 if(error)
                     console.log(error);
                 else
                     {   
-                        console.log(response.location);
+                        console.log(location);
                         console.log(data);
                     }
             } )
