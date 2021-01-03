@@ -1,9 +1,9 @@
 
-const requestWeather=require('./weatherRequest.js')
-const requestgeoLocation=require('./geoRequest.js')
+const requestWeather=require('./utils/weatherRequest.js')
+const requestgeoLocation=require('./utils/geoRequest.js')
 
 if(process.argv.length === 2)
-    console.log("pls provide input as argument")
+    console.log("please provide input as argument")
 else
    { 
     
