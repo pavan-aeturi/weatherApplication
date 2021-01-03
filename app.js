@@ -1,28 +1,45 @@
 
 const requestWeather=require('./weatherRequest.js')
 const requestgeoLocation=require('./geoRequest.js')
+const express=require('express')
 
-if(process.argv.length === 2)
-    console.log("pls provide input as argument")
-else
-   { 
-    
-    requestgeoLocation(process.argv[2],(error,{latitude,longitude,location}={})=>{
+const app=express()
+const port=3000
+
+app.get('',(req,res)=>{
+
+    if(!req.query.address)
+    {
+        return res.send({
+            error: "Pls fill the adress required in URI"
+        })
+    }
+    requestgeoLocation(req.query.address,(error,{latitude,longitude,location}={})=>{
         if(error)
-            console.log(error)
+            return res.send({
+                error
+            })
         else
         { 
             requestWeather(latitude, longitude,(error,data)=>{
                 if(error)
-                    console.log(error);
+                    return res.send({
+                        error
+                    })
                 else
-                    {   
-                        console.log(location);
-                        console.log(data);
-                    }
+                return res.send({
+                    data,
+                    location
+                })
             } )
 
         }
     })
-}
 
+    
+})
+
+
+app.listen(port, () => {
+    console.log(`Weather api listening at http://localhost:${port}`)
+  })
